@@ -73,10 +73,10 @@ For really big files and slow grammars, there is an appreciable delay when displ
 
   <change-notes><![CDATA[
 	<ul>
-	    <li>Removed usages of `ActionUpdateThread.OLD_EDT` (<a href="https://github.com/antlr/intellij-plugin-v4/issues/696">#696</a>)</li>
-	    <li>Updated ANTLR to 4.13.2</li>
+	    <li>Add completion contributor for import statements. by @indegro in #676</li>
+    	<li>Key arrow down in overview generated NullPointerException #725</li>
     </ul>
-	 See the complete list of <a href="https://github.com/antlr/intellij-plugin-v4/issues?q=milestone%3A1.24+is%3Aclosed">fixed issues</a>.
+	 See the complete list of <a href="https://github.com/antlr/intellij-plugin-v4/issues?q=milestone%3A1.25+is%3Aclosed">fixed issues</a>.
       ]]>
   </change-notes>
 
