@@ -1,7 +1,5 @@
 package org.antlr.intellij.plugin.refactor;
 
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
 import org.antlr.intellij.plugin.parser.ANTLRv4Parser;
@@ -23,6 +21,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.intellij.openapi.command.WriteCommandAction.writeCommandAction;
 
 public class RefactorUtils {
 	public static final Map<String,String> literalToRuleNameMap = new HashMap<String, String>() {{
@@ -146,26 +146,14 @@ public class RefactorUtils {
 	                               final int start, final int stop, // inclusive
 	                               final String text)
 	{
-		WriteCommandAction setTextAction = new WriteCommandAction(project) {
-			@Override
-			protected void run(final Result result) {
-				doc.replaceString(start, stop+1, text);
-			}
-		};
-		setTextAction.execute();
+		writeCommandAction(project).run(() -> doc.replaceString(start, stop+1, text));
 	}
 
 	public static void insertText(final Project project, final Document doc,
 	                              final int where,
 	                              final String text)
 	{
-		WriteCommandAction setTextAction = new WriteCommandAction(project) {
-			@Override
-			protected void run(final Result result) {
-				doc.insertString(where, text);
-			}
-		};
-		setTextAction.execute();
+		writeCommandAction(project).run(() -> doc.insertString(where, text));
 	}
 
 	/** Get start/stop of an entire rule including semi and then clean up
