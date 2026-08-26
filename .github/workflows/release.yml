@@ -22,17 +22,21 @@ jobs:
             SINCE_VERSION: 223
             UNTIL_VERSION: 230.*
             VERSION_SUFFIX: "-2022"
-          - IDEA_VERSION: IC-2023.1
+          - IDEA_VERSION: IC-2023.3.8
             SINCE_VERSION: 230
             UNTIL_VERSION: 240.*
             VERSION_SUFFIX: "-2023"
-          - IDEA_VERSION: IC-2023.1
+          - IDEA_VERSION: IC-2024.3.7.1
             SINCE_VERSION: 240
             UNTIL_VERSION: 250.*
             VERSION_SUFFIX: "-2024"
-          - IDEA_VERSION: IC-2023.1
+          - IDEA_VERSION: IU-2025.3.6.1
             SINCE_VERSION: 250
-            VERSION_SUFFIX:
+            UNTIL_VERSION: 260.*
+            VERSION_SUFFIX: "-2025"
+          - IDEA_VERSION: IU-2026.2.1
+            SINCE_VERSION: 260
+            VERSION_SUFFIX: ""
 
     steps:
       - uses: actions/checkout@v4
@@ -51,4 +55,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: "antlr-intellij${{matrix.env.VERSION_SUFFIX}}"
-          path: build/distributions/antlr-intellij-plugin-v4-*.zip
+          path: build/distributions/intellij-plugin-v4-*.zip

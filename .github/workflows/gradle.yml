@@ -17,8 +17,10 @@ jobs:
           # see https://www.jetbrains.com/idea/download/previous.html
           # and https://www.jetbrains.com/intellij-repository/snapshots/
           - IDEA_VERSION: IC-2022.3 # Oldest supported version
-          - IDEA_VERSION: IC-2023.1
-          - IDEA_VERSION: IC-2023.3.2
+          - IDEA_VERSION: IC-2023.3.8
+          - IDEA_VERSION: IC-2024.3.7.1
+          - IDEA_VERSION: IU-2025.3.6.1
+          - IDEA_VERSION: IU-2026.2.1
 
     steps:
       - uses: actions/checkout@v4
