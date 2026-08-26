@@ -196,7 +196,7 @@ You can tweak the version of the IntelliJ platform used to build/test the plugin
 ideaVersion=IC-2020.2.2
 ```
 
-As of 1.18, java 11 is assumed but you might get away with earlier java.
+Java 17 is required.
 
 A high level description of how the plugin works can be found in `ARCHITECTURE.md`.
 

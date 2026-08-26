@@ -1,3 +1,5 @@
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+
 buildscript {
     repositories {
         mavenCentral()
@@ -5,35 +7,42 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.intellij" version "1.17.4"
+    id 'java'
+    id 'antlr'
+    id "org.jetbrains.intellij.platform" version "2.18.1"
 }
 
 wrapper {
-    gradleVersion = '7.5'
+    gradleVersion = '9.0.0'
 }
 
 group 'antlr'
 version pluginVersion
 
-apply plugin: 'java'
-apply plugin: 'org.jetbrains.intellij'
-apply plugin: 'antlr'
+def ideaVersionValue = findProperty("ideaVersion")?.toString()
+if (!ideaVersionValue || !ideaVersionValue.contains("-")) {
+    throw new GradleException("ideaVersion must follow <TYPE>-<VERSION> format (for example: IC-2022.3)")
+}
+def (platformType, platformVersion) = ideaVersionValue.split("-", 2)
+def sinceBuildOverride = findProperty("sinceBuildVersion")?.toString()?.trim()
+def untilBuildOverride = findProperty("untilBuildVersion")?.toString()?.trim()
 
 compileJava {
     sourceCompatibility = '17'
     targetCompatibility = '17'
 }
 
-intellij {
-    version = ideaVersion
+intellijPlatform {
+    buildSearchableOptions = false
+    pluginConfiguration {
+        id = 'org.antlr.intellij.plugin'
+        version = project.version.toString()
+        name = 'ANTLR v4'
 
-    pluginName = 'antlr-intellij-plugin-v4'
-    downloadSources = true
-    updateSinceUntilBuild = true
-
-    patchPluginXml {
-        sinceBuild = sinceBuildVersion
-        untilBuild = untilBuildVersion
+        ideaVersion {
+            sinceBuild = provider { sinceBuildOverride ?: null }
+            untilBuild = provider { untilBuildOverride ?: null }
+        }
     }
 }
 
@@ -43,9 +52,16 @@ repositories {
     maven { // Gets snapshots of antlr if needed
         url "https://oss.sonatype.org/content/repositories/snapshots/"
     }
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 dependencies {
+    intellijPlatform {
+        create(platformType, platformVersion)
+        testFramework(TestFrameworkType.Platform.INSTANCE)
+    }
     antlr("org.antlr:antlr4:$antlr4Version") { // use ANTLR version 4
         exclude group:'com.ibm.icu', module:'icu4j'
     }

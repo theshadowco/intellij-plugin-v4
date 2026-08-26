@@ -112,7 +112,7 @@ public class MockToolWindow implements ToolWindow {
 
     public void setStripeTitle(@NlsContexts.TabTitle @NotNull String title) {}
 
-    public void setStripeTitleProvider(@NotNull Supplier<@NlsContexts.TabTitle @NotNull String> supplier) {
+    public void setStripeTitleProvider(@NotNull Supplier<@NlsContexts.TabTitle String> supplier) {
 
     }
 
