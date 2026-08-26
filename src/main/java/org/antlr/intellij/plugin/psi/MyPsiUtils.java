@@ -1,7 +1,6 @@
 package org.antlr.intellij.plugin.psi;
 
 import com.intellij.lang.ASTNode;
-import com.intellij.openapi.application.Result;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
@@ -101,14 +100,10 @@ public class MyPsiUtils {
 
 	public static void replacePsiFileFromText(final Project project, final PsiFile psiFile, String text) {
 		final PsiFile newPsiFile = createFile(project, text);
-		WriteCommandAction setTextAction = new WriteCommandAction(project) {
-			@Override
-			protected void run(final Result result) {
-				psiFile.deleteChildRange(psiFile.getFirstChild(), psiFile.getLastChild());
-				psiFile.addRange(newPsiFile.getFirstChild(), newPsiFile.getLastChild());
-			}
-		};
-		setTextAction.execute();
+		WriteCommandAction.writeCommandAction(project).run(() -> {
+			psiFile.deleteChildRange(psiFile.getFirstChild(), psiFile.getLastChild());
+			psiFile.addRange(newPsiFile.getFirstChild(), newPsiFile.getLastChild());
+		});
 	}
 
 	public static PsiFile createFile(Project project, String text) {
