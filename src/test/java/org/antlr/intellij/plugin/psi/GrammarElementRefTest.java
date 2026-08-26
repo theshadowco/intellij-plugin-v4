@@ -3,7 +3,7 @@ package org.antlr.intellij.plugin.psi;
 import com.intellij.openapi.editor.markup.RangeHighlighter;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
-import com.intellij.testFramework.fixtures.LightPlatformCodeInsightFixtureTestCase;
+import com.intellij.testFramework.fixtures.BasePlatformTestCase;
 import com.intellij.usageView.UsageInfo;
 import org.antlr.intellij.plugin.ANTLRv4FileRoot;
 import org.antlr.intellij.plugin.ANTLRv4PluginController;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.function.Consumer;
 
-public class GrammarElementRefTest extends LightPlatformCodeInsightFixtureTestCase {
+public class GrammarElementRefTest extends BasePlatformTestCase {
 	public void testFindUsagesOfLexerRule() {
 		Collection<UsageInfo> ruleUsages = myFixture.testFindUsages("SimpleGrammar.g4");
 		assertEquals(3, ruleUsages.size());
